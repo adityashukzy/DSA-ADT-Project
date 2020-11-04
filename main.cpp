@@ -80,7 +80,6 @@ void dequeue()
         head = head->next;
 
         enqueueTemp(temp);
-        free(temp);
     }
 }
 

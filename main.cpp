@@ -171,6 +171,68 @@ void displayQueue(struct qNode *node)
     cout << endl;
 }
 
+struct tree
+{
+    string name;
+    int age, yearofBirth;
+    struct tree *left;
+    struct tree *right;
+};
+
+struct tree *root = NULL;
+static int count = 0; //for correct number of insertions
+
+struct tree *insert(struct tree *rt, int  level, int n)
+{
+    if(count == n)
+	    return rt;
+    if(level == 1)
+    {
+	struct tree *tmp = new struct tree;
+ 	tmp->name = head->name;
+	tmp->age = head->age;
+	tmp->yearofBirth = head->yearofBirth;
+ 	tmp->left = tmp->right = NULL;
+ 	rt = tmp;
+	dequeue();
+	count++;
+	
+    }
+    else
+    {
+	rt->left = insert(rt->left,level-1,n);
+	rt->right = insert(rt->right, level-1,n);
+    }
+    return rt;
+}
+
+void preorder(struct tree *link)
+{
+    if(link == NULL)
+    {
+	return;
+    }
+    else
+    {
+	 cout << link->name << ", " << link->age << ", " << link->yearofBirth << "\n";
+	preorder(link->left);
+	preorder(link->right);
+    }
+}
+
+void postorder(struct tree *link)
+{
+    if(link == NULL)
+    {
+	return;
+    }
+    else
+    {
+	postorder(link->left);
+	postorder(link->right);
+	cout << link->name << ", " << link->age << ", " << link->yearofBirth << "\n";
+    }
+}
 
 // MAIN FUNCTION
 int main()
@@ -243,6 +305,26 @@ int main()
     cout << endl << "Reversed Queue now: ";
     displayQueue(head);
 
+    int level = 0;
+    ctr = n;
+    while(ctr > 0)
+    {
+	level++;
+	ctr /=2;
+    }
+    cout << level << '\n';
+    cout << "Dequeueing data into an unordered binary tree:\n";
+    int l = 1;
+    while(l <= level)
+    {
+        root = insert(root,l,n);
+	l++;
+    }
+    
+    cout << "\nPreorder traversal of the unordered binary tree:\n";
+    preorder(root);
+    cout << "\nPostorder traversal of the unordered binary tree:\n";
+    postorder(root);
 /*
     cout << endl << endl << "Do you wish to continue processing? (y/n)" << endl;
     cin >> choice;

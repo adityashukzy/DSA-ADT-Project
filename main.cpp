@@ -267,6 +267,16 @@ void inorderInsert(struct tree *link)
     }
 }
 
+void display()
+{
+    struct node *tmp = list;
+    while(tmp != NULL)
+    {
+	cout << tmp->name << ", " << tmp->age << ", " << tmp->yearofBirth << "\n";
+	tmp = tmp->next;
+    }
+}
+
 // MAIN FUNCTION
 int main()
 {
@@ -358,8 +368,10 @@ int main()
     preorder(root);
     cout << "\nPostorder traversal of the unordered binary tree:\n";
     postorder(root);
-	cout << "Inserting contents into a linked list in in-order:\n";
+	cout << "\nInserting contents into a linked list in in-order:\n";
     inorderInsert(root);
+    cout << "The linked list:\n";
+    display();
 /*
     cout << endl << endl << "Do you wish to continue processing? (y/n)" << endl;
     cin >> choice;

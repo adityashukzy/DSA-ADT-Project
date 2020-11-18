@@ -353,6 +353,38 @@ void quickSort(struct node **headRef)
     return;
 }
 
+void update()
+{
+    struct node *newNode = new struct node;
+    cin >> newNode->name >> newNode->age >> newNode->yearofBirth;
+    newNode->next = NULL;
+
+    if(newNode->name < list->name)
+    {
+	newNode->next = list;
+	list = newNode;
+    }
+    else
+    {
+	struct node *prev = list;
+	struct node *nt = list;
+	while(nt != NULL)
+	{
+	    if(newNode->name < nt->name)
+		break;
+	    prev = nt;
+	    nt = nt->next;
+	}
+	if(nt == list)
+	{
+	    nt = nt->next;
+	}
+	prev->next = newNode;
+	newNode->next = nt;
+    }
+}
+
+
 // MAIN FUNCTION
 int main()
 {
@@ -452,6 +484,11 @@ int main()
 	cout<<"\nQuicksorting the list:\n";
     //node *a=list;
     quickSort(&list);
+    display(list);
+	
+	cout << "\nPlease enter the new set of input:\n";
+    update();
+    cout << "\nFinal list:\n";
     display(list);
 /*
     cout << endl << endl << "Do you wish to continue processing? (y/n)" << endl;

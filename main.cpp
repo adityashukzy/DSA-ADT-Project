@@ -384,6 +384,12 @@ void update()
     }
 }
 
+void userResponse()
+{
+    cout << "\nPlease enter any key to continue:\n";
+    char c = cin.get();
+}
+
 
 // MAIN FUNCTION
 int main()
@@ -423,7 +429,7 @@ int main()
 
     cout << endl << "Queue after requeuing to it: ";
     displayQueue(head);
-
+userResponse();
 /*
     cout << endl << endl << "Do you wish to continue processing? (y/n)" << endl;
     cin >> choice;
@@ -444,7 +450,7 @@ int main()
     }
 
     displayStack();
-
+userResponse();
     int ctr = n;
     cout << "Now popping each off and queueing to Queue ADT: " << endl;
     while(ctr--)
@@ -455,6 +461,7 @@ int main()
 
     cout << endl << "Reversed Queue now: ";
     displayQueue(head);
+	userResponse();
 
     int level = 0;
     ctr = n;
@@ -463,7 +470,6 @@ int main()
 	level++;
 	ctr /=2;
     }
-    cout << level << '\n';
     cout << "Dequeueing data into an unordered binary tree:\n";
     int l = 1;
     while(l <= level)
@@ -474,8 +480,10 @@ int main()
     
     cout << "\nPreorder traversal of the unordered binary tree:\n";
     preorder(root);
+	userResponse();
     cout << "\nPostorder traversal of the unordered binary tree:\n";
     postorder(root);
+	userResponse();
 	cout << "\nInserting contents into a linked list in in-order:\n";
     inorderInsert(root);
     cout << "The linked list:\n";
@@ -485,7 +493,7 @@ int main()
     //node *a=list;
     quickSort(&list);
     display(list);
-	
+	userResponse();
 	cout << "\nPlease enter the new set of input:\n";
     update();
     cout << "\nFinal list:\n";

@@ -3,20 +3,20 @@ using namespace std;
 
 // STACK DEFINITIONS AND METHODS
 // stack structure definition
-struct stNode
+struct node
 {
     string name;
     int age, yearofBirth;
-    struct stNode *next;
+    struct node *next;
 };
 
 // top of stack
-struct stNode *top = NULL;
+struct node *top = NULL;
 
 // method to push to TOS
 void pushStack(string name, int age, int yearofBirth)
 {
-    struct stNode *newNode = (struct stNode*)malloc(sizeof(struct stNode));
+    struct node *newNode = (struct node*)malloc(sizeof(struct node));
     newNode->name = name;
     newNode->age = age;
     newNode->yearofBirth = yearofBirth;
@@ -42,7 +42,7 @@ void popStack()
     }
     else
     {
-        struct stNode *temp = top;
+        struct node *temp = top;
         top = top->next;
         cout << "Popping Node: " << temp->name << ", " << temp->age << ", " << temp->yearofBirth << endl;
         delete temp;
@@ -52,7 +52,7 @@ void popStack()
 // method to display stack
 void displayStack()
 {
-    struct stNode *temp = top;
+    struct node *temp = top;
     
     cout << endl << "Stack: " << endl;
     while(temp != NULL)
@@ -68,21 +68,21 @@ void displayStack()
 
 // QUEUE DEFINITIONS AND METHODS
 // queue structure defintion
-struct qNode
+/*struct qNode
 {
     string name;
     int age, yearofBirth;
     struct qNode *next;
-};
+};*/
 
 // queue main head & temp head
-struct qNode *head = NULL;
-struct qNode *tempHead = NULL;
+struct node *head = NULL;
+struct node *tempHead = NULL;
 
 // enqueue function
 void enqueue(string name, int age, int yearofBirth)
 {
-    struct qNode *newNode = (struct qNode*)malloc(sizeof(struct qNode));
+    struct node *newNode = (struct node*)malloc(sizeof(struct node));
     newNode->name = name;
     newNode->age = age;
     newNode->yearofBirth = yearofBirth;
@@ -94,7 +94,7 @@ void enqueue(string name, int age, int yearofBirth)
     }
     else
     {
-        struct qNode *temp = head;
+        struct node *temp = head;
         while(temp->next != NULL)
         {
             temp = temp->next;
@@ -106,9 +106,9 @@ void enqueue(string name, int age, int yearofBirth)
 }
 
 // enqueue method for temp queue (i.e. with tempHead)
-void enqueueTemp(struct qNode *head)
+void enqueueTemp(struct node *head)
 {
-    struct qNode *newNode = (struct qNode*)malloc(sizeof(struct qNode));
+    struct node *newNode = (struct node*)malloc(sizeof(struct node));
     newNode->name = head->name;
     newNode->age = head->age;
     newNode->yearofBirth = head->yearofBirth;
@@ -120,7 +120,7 @@ void enqueueTemp(struct qNode *head)
     }
     else
     {
-        struct qNode *temp = tempHead;
+        struct node *temp = tempHead;
         while(temp->next != NULL)
         {
             temp = temp->next;
@@ -143,7 +143,7 @@ void dequeue()
     {
         cout << "Dequeueing Node: " <<  head->name << ", " << head->age << ", " << head->yearofBirth << endl;
 
-        struct qNode *temp = head;
+        struct node *temp = head;
         head = head->next;
 
         enqueueTemp(temp);
@@ -152,7 +152,7 @@ void dequeue()
 }
 
 // method to display queue for given head (passed as parameter)
-void displayQueue(struct qNode *node)
+void displayQueue(struct node *node)
 {
     cout << endl;
     if(node == NULL)
@@ -161,7 +161,7 @@ void displayQueue(struct qNode *node)
         return;
     }
 
-    struct qNode *temp = node;
+    struct node *temp = node;
     while(temp != NULL)
     {
         cout << temp->name << ", " << temp->age << ", " << temp->yearofBirth << endl;
@@ -234,6 +234,39 @@ void postorder(struct tree *link)
     }
 }
 
+struct node *list = NULL;
+
+void listInsert(struct tree *link)
+{
+    struct node *tmp = new struct node;
+    tmp->name = link->name;
+    tmp->age = link->age;
+    tmp->yearofBirth = link->yearofBirth;
+    tmp->next =  NULL;
+
+    if(list == NULL)
+	list = tmp;
+    else
+    {
+	struct node *nt = list;
+	while(nt->next != NULL)
+	    nt = nt->next;
+	nt->next = tmp;
+    }
+}
+
+void inorderInsert(struct tree *link)
+{
+    if(link == NULL)
+	return;
+    else
+    {
+	inorderInsert(link->left);
+	listInsert(link);
+	inorderInsert(link->right);
+    }
+}
+
 // MAIN FUNCTION
 int main()
 {
@@ -263,7 +296,7 @@ int main()
     cout << endl << "Queue now: ";
     displayQueue(head);
 
-    struct qNode *temp = tempHead;
+    struct node *temp = tempHead;
     while(temp != NULL)
     {
         enqueue(temp->name, temp->age, temp->yearofBirth);
@@ -325,6 +358,8 @@ int main()
     preorder(root);
     cout << "\nPostorder traversal of the unordered binary tree:\n";
     postorder(root);
+	cout << "Inserting contents into a linked list in in-order:\n";
+    inorderInsert(root);
 /*
     cout << endl << endl << "Do you wish to continue processing? (y/n)" << endl;
     cin >> choice;

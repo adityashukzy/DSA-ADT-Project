@@ -284,6 +284,7 @@ struct node *getTail(struct node *cur)
     return cur;
 }
 
+//Partitions the list taking the last element as the pivot. 
 struct node *partition(struct node *head, struct node *end,
                        struct node **newHead, struct node **newEnd)
 {
@@ -320,6 +321,7 @@ struct node *partition(struct node *head, struct node *end,
     return pivot;
 }
 
+//Quick sort function using recursion. 
 struct node *quickSortRecur(struct node *head, struct node *end)
 {
     if (!head || head == end)
@@ -347,6 +349,7 @@ struct node *quickSortRecur(struct node *head, struct node *end)
     return newHead;
 }
 
+//The main function for quicksort which calls the quickSortRecur function. This is a wrapper over the recursive function. 
 void quickSort(struct node **headRef)
 {
     (*headRef) = quickSortRecur(*headRef, getTail(*headRef));
